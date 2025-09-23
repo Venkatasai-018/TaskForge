@@ -13,7 +13,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True,nullable=False,autoincrement=True)
     email: Mapped[str] = mapped_column(String(30),nullable=False,unique=True)
     username: Mapped[Optional[str]]=mapped_column(String(30),nullable=False)
-    password: Mapped[str] = mapped_column(String(30),nullable=False)
+    password: Mapped[str] = mapped_column(String(300),nullable=False)
 
 class Projects(Base):
     __tablename__="projects"
