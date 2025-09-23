@@ -11,7 +11,7 @@ from datetime import datetime
 class User(Base):
     __tablename__="users"
     id: Mapped[int] = mapped_column(primary_key=True,nullable=False,autoincrement=True)
-    email: Mapped[str] = mapped_column(String(30),nullable=False)
+    email: Mapped[str] = mapped_column(String(30),nullable=False,unique=True)
     username: Mapped[Optional[str]]=mapped_column(String(30),nullable=False)
     password: Mapped[str] = mapped_column(String(30),nullable=False)
 
@@ -22,6 +22,7 @@ class Projects(Base):
     description:Mapped[str]=mapped_column(String(100))
     ownerid:Mapped[int]=mapped_column(ForeignKey("users.id"),nullable=False)
     created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),nullable=False,server_default=func.now())
+
 
 class Projectmembers(Base):
     __tablename__="projectmembers"
@@ -38,6 +39,7 @@ class Projectmembers(Base):
             raise ValueError(f"Role must be one of {self.ALLOWED_ROLES}")
         return value
     
+
 class Tasks(Base):
     __tablename__="tasks"
     id:Mapped[int]=mapped_column(primary_key=True,autoincrement=True,nullable=False)
@@ -57,7 +59,7 @@ class Tasks(Base):
         if value not in self.Allowed_Status:
             raise ValueError(f"Status must be one of {self.Allowed_Status}")
         return value
-    Allowed_priority=["p1","p2","p3","p4"]
+    Allowed_priority=["high","medium","low"]
     @validates(priority)
     def validate_priority(self,key,value):
         if value not in self.Allowed_priority:

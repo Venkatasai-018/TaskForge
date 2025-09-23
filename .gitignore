@@ -1,0 +1,11 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# VS Code settings (optional)
+.vscode/
+
+# OS files (optional)
+.DS_Store
+Thumbs.db
