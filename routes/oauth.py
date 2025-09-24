@@ -8,22 +8,14 @@ from sqlalchemy.orm import Session
 from db.database import *
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/token')
 
 SECRET_KEY = "7yuio90oi8ui87thh7hbjub"
-ALGORITHM = "Hs265"
+ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = "2"
 
 
-def create_access_token(data: dict):
-    to_encode = data.copy()
 
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
-
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-
-    return encoded_jwt
 
 
 def verify_access_token(token: str, credentials_exception):

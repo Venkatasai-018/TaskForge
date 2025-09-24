@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase,Mapped,sessionmaker
+from sqlalchemy.orm import DeclarativeBase,Mapped,sessionmaker,Session
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -13,8 +13,11 @@ Base=declarative_base()
 
 
 def get_db():
-    db=SessionLocal()
+    db = SessionLocal()
     try:
         yield db
-    except:
+    except Exception as e:
+        print("DB dependency error:", e)  # log it
+        raise  # MUST re-raise
+    finally:
         db.close()
