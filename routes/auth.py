@@ -5,6 +5,9 @@ from db.database import get_db
 from passlib.context import CryptContext
 from models import *
 from routes.utils import *
+from fastapi.security.oauth2 import OAuth2PasswordRequestForm
+from routes.oauth import *
+from routes.utils import *
 
 
 router = APIRouter(
@@ -25,6 +28,8 @@ def registration(userdata: Usercreate, db: Session = Depends(get_db)):
 
     return new_user
 
+
+
 @router.post("/login")
 def login(user_cred:Userlogin,db: Session = Depends(get_db)):
     user=db.query(User).filter(User.email == user_cred.email).first()
@@ -35,3 +40,4 @@ def login(user_cred:Userlogin,db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
         return {"invalid"}
     return {"Msg":"sample token"}
+
